@@ -132,6 +132,22 @@ a { color: var(--link); }
   outline-offset: 4px;
 }
 
+/* Skip link — off screen until the keyboard reaches it */
+.skip {
+  position: absolute;
+  left: -9999px;
+}
+
+.skip:focus {
+  position: static;
+  display: block;
+  padding: 0.5rem 1rem;
+  background-color: var(--accent);
+  color: var(--text);
+  font-family: var(--font-heading);
+  font-weight: 500;
+}
+
 /* Sections */
 main {
   max-width: 60rem;
@@ -180,25 +196,6 @@ main {
   background-color: var(--surface);
   border-top: 4px solid var(--accent);
   border-radius: 0.5rem;
-}
-
-.project h3 a {
-  color: var(--primary);
-  text-decoration: underline 2px transparent;
-  text-underline-offset: 0.2em;
-  border-radius: 2px;
-  transition: color 0.2s ease, text-decoration-color 0.2s ease;
-}
-
-.project h3 a:hover,
-.project h3 a:focus-visible {
-  color: var(--link);
-  text-decoration-color: var(--link);
-}
-
-.project h3 a:focus-visible {
-  outline: 2px solid var(--link);
-  outline-offset: 3px;
 }
 
 /* Godot screenshot — fills its card, corners match the tank */

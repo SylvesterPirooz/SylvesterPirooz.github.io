@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Andrew Pirooz — Portfolio</title>
-  <meta name="description" content="Portfolio of Andrew Pirooz, ITAS student at Vancouver Island University.">
+  <title>Andrew Pirooz: IT student portfolio, VIU</title>
+  <meta name="description" content="Andrew Pirooz is an Information Technology and Applied Systems student at VIU: Linux, networking, a Godot game in progress, and a path to Security+.">
+  <link rel="canonical" href="https://sylvesterpirooz.github.io/">
+  <meta property="og:title" content="Andrew Pirooz: IT student portfolio">
+  <meta property="og:description" content="Information Technology and Applied Systems student at VIU.">
+  <meta property="og:image" content="https://sylvesterpirooz.github.io/images/godot-project.webp">
+  <meta property="og:url" content="https://sylvesterpirooz.github.io/">
   <!-- Fonts first, then the stylesheet -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +17,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
 
   <header class="site-header">
     <p class="site-name">Andrew Pirooz</p>
@@ -24,7 +30,7 @@
     </nav>
   </header>
 
-  <main>
+  <main id="main">
 
     <section id="about" class="section">
       <h1>Hi, I'm Andrew.</h1>
@@ -33,6 +39,8 @@
         I'm an Information Technology and Applied Systems student at Vancouver Island University.
         I like taking things apart to see how they work — servers, networks, and the occasional
         game save file — and then putting them back together a little better than before.
+        I built this site in HTML and CSS, working with an AI assistant, including the Three.js
+        aquarium in my first project.
       </p>
       <h2>Skills</h2>
       <ul class="skills">
@@ -49,25 +57,25 @@
       <p>Three things I want to accomplish in my career.</p>
       <div class="projects">
         <article class="project">
-          <h3><a href="https://godotengine.org/">Make my own videogame.</a></h3>
-          <p>Currently coding an "Insane Aquarium" successor in Godot.</p>
-          <img class="project-shot"
+          <h3>Make my own videogame.</h3>
+          <p>I'm building a successor to Insaniquarium in Godot, coded in GDScript. You feed your fish so they grow and drop coins, then spend the coins on more fish. Mine will have twice as many fish and aliens as the original, plus quality-of-life upgrades that cut down the obsessive clicking. The gameplay loop is where I want it, and Level 2 is finished. The snail in the screenshot is a Pet: you choose which pets to bring into a level, aliens can't kill them, and each helps in its own way. The snail collects coins that land near it on the sea floor. Next come 3D models of every fish and alien in Blender, music in Bitwig Studio, and publicly available sound effects. One day I'd like to release it on Steam.</p>
+          <img class="project-shot" loading="lazy"
                src="images/godot-project-thumb.webp"
                srcset="images/godot-project-thumb.webp 400w, images/godot-project.webp 1200w"
                sizes="(min-width: 900px) 240px, calc(100vw - 6rem)"
                width="400" height="225"
                alt="Screenshot of my Insaniquarium successor in Godot: two fish and a snail in a dark blue tank, with the shop bar along the top">
-          <div id="scene" role="img" aria-label="3D animation of Blippy, a white dolphin, swimming in an aquarium"></div>
+          <div id="scene" role="img" aria-label="3D animation of Blippy, a white dolphin, swimming with two smaller dolphins in a teal aquarium with a sand floor, rising bubbles and a pink-flowered plant."></div>
           <a href="https://godotengine.org/">More about Godot.</a>
         </article>
         <article class="project">
-          <h3><a href="https://www.comptia.org/certifications/security">Earn a security certification</a></h3>
-          <p>Work towards CompTIA Security+ so I can move into defensive security and incident response.</p>
+          <h3>Earn a security certification</h3>
+          <p>I'm working towards CompTIA Security+ so I can move into defensive security and incident response, and to give my resume more weight. I'm building my study notes in Obsidian now, and I plan to take Security+ courses after I finish my degree at VIU.</p>
           <a href="https://www.comptia.org/certifications/security">About Security+</a>
         </article>
         <article class="project">
-          <h3><a href="https://newpublic.substack.com/p/the-handmade-internet-is-making-a">Contribute to the "Indie Social Media" space.</a></h3>
-          <p>I think a quiet social space without all the algorithmic white noise would be beneficial for my mental health.</p>
+          <h3>Contribute to the "Indie Social Media" space.</h3>
+          <p>I think a quiet social space without all the algorithmic white noise would be beneficial for my mental health. I want to build my own social website, where audio quality, speed and features aren't locked behind a paywall. I'd like it to bring together people who are as curious about these alternatives as I am, and to show what a website can look like with total creative freedom. Building it will also grow my HTML, CSS and JavaScript skills.</p>
           <a href="https://newpublic.substack.com/p/the-handmade-internet-is-making-a">How to contribute</a>
         </article>
       </div>
