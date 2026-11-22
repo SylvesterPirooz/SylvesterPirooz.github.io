@@ -1,0 +1,276 @@
+/*
+  PALETTE — colour, job, contrast ratio (WCAG 2.1, against its background)
+  --bg        #f7f4ee  page background (warm paper)
+  --surface   #ffffff  project card background
+  --text      #1f2933  body text          13.44:1 on --bg · 14.76:1 on --surface
+  --muted     #52606d  secondary text      5.88:1 on --bg ·  6.46:1 on --surface
+  --primary   #0f4c5c  header/footer bg, headings   8.66:1 on --bg · 9.51:1 on --surface
+  --on-primary #f7f4ee text on --primary   8.66:1
+  --link      #a53d0c  link text           5.85:1 on --bg ·  6.42:1 on --surface
+  --accent    #f4a259  decorative rules and borders; nav hover/focus text 4.60:1 on --primary
+  Every text colour is 4.5:1 or better against its background.
+
+  TYPE PAIRING
+  Headings: Space Grotesk (500, 700) · Body: Source Sans 3 (400, 600)
+
+  TYPE SCALE — Major Third (×1.25), base 1rem = 16px
+  --step--1 0.8rem  · --step-0 1rem · --step-1 1.25rem
+  --step-2 1.563rem · --step-3 1.953rem · --step-4 2.441rem
+*/
+
+:root {
+  --bg: #f7f4ee;
+  --surface: #ffffff;
+  --text: #1f2933;
+  --muted: #52606d;
+  --primary: #0f4c5c;
+  --on-primary: #f7f4ee;
+  --link: #a53d0c;
+  --accent: #f4a259;
+
+  --font-heading: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Source Sans 3", system-ui, sans-serif;
+
+  --step--1: 0.8rem;
+  --step-0: 1rem;
+  --step-1: 1.25rem;
+  --step-2: 1.563rem;
+  --step-3: 1.953rem;
+  --step-4: 2.441rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+}
+
+/* No image is ever wider than its box */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Type scale applied */
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  color: var(--primary);
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+}
+
+h1 { font-size: var(--step-4); font-weight: 700; }
+h2 { font-size: var(--step-3); font-weight: 700; }
+h3 { font-size: var(--step-1); font-weight: 500; }
+
+p { margin: 0 0 1em; }
+
+.lead { font-size: var(--step-1); }
+
+small { font-size: var(--step--1); }
+
+a { color: var(--link); }
+
+/* Header and nav — phone first: compact, links on one row under the name */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--primary);
+  color: var(--on-primary);
+  border-bottom: 4px solid var(--accent);
+}
+
+.site-name {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: var(--step-2);
+  font-weight: 700;
+}
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-list a {
+  color: var(--on-primary);
+  font-family: var(--font-heading);
+  font-weight: 500;
+  text-decoration: underline 2px transparent;
+  text-underline-offset: 0.3em;
+  border-radius: 2px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.nav-list a:hover,
+.nav-list a:focus-visible {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+.nav-list a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* Sections */
+main {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section {
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--accent);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+/* About Me */
+.avatar {
+  display: block;
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  border: 4px solid var(--accent);
+}
+
+.skills {
+  padding-left: 1.25rem;
+}
+
+.skills li::marker {
+  color: var(--primary);
+}
+
+/* Projects — wrapping flex row; phone first: one card per row */
+.projects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.project {
+  flex: 1 1 100%;
+  padding: 1.5rem;
+  background-color: var(--surface);
+  border-top: 4px solid var(--accent);
+  border-radius: 0.5rem;
+}
+
+.project h3 a {
+  color: var(--primary);
+  text-decoration: underline 2px transparent;
+  text-underline-offset: 0.2em;
+  border-radius: 2px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.project h3 a:hover,
+.project h3 a:focus-visible {
+  color: var(--link);
+  text-decoration-color: var(--link);
+}
+
+.project h3 a:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 3px;
+}
+
+/* Godot screenshot — fills its card, corners match the tank */
+.project-shot {
+  display: block;
+  width: 100%;
+  margin: 0 0 1rem;
+  border-radius: 0.5rem;
+}
+
+/* 3D scene — Blippy's aquarium, fills its card, always 220 × 150 in shape */
+#scene {
+  width: 100%;
+  aspect-ratio: 22 / 15;
+  margin: 0 0 1rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* The canvas sits flush in its box, with no gap underneath */
+#scene canvas {
+  display: block;
+}
+
+.project p {
+  color: var(--muted);
+}
+
+/* Contact */
+.contact-list {
+  padding: 0;
+  list-style: none;
+  font-size: var(--step-1);
+}
+
+/* Long addresses break onto a new line instead of pushing past the edge */
+.contact-list a {
+  overflow-wrap: anywhere;
+}
+
+/* Footer */
+.site-footer {
+  padding: 1rem 1.5rem;
+  background-color: var(--primary);
+  color: var(--on-primary);
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+/* Wider screens — from 768px: roomier header, nav beside the name */
+@media (min-width: 768px) {
+  .site-header {
+    padding: 1rem 1.5rem;
+  }
+
+  .nav-list {
+    gap: 1.5rem;
+  }
+
+  main {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Wider screens — from 900px: the three projects sit side by side */
+@media (min-width: 900px) {
+  .project {
+    flex: 1 1 0;
+  }
+}
+
+/* AI disclosure: Claude (Anthropic) drafted the palette, type scale, and layout styles from the assignment handout, and in week 6 made the layout mobile-first with min-width media queries. */

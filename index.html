@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Andrew Pirooz — Portfolio</title>
+  <meta name="description" content="Portfolio of Andrew Pirooz, ITAS student at Vancouver Island University.">
+  <!-- Fonts first, then the stylesheet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <p class="site-name">Andrew Pirooz</p>
+    <nav aria-label="Main">
+      <ul class="nav-list">
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section id="about" class="section">
+      <h1>Hi, I'm Andrew.</h1>
+      <img class="avatar" src="images/avatar.svg" alt="Illustrated avatar of Andrew" width="200" height="200">
+      <p class="lead">
+        I'm an Information Technology and Applied Systems student at Vancouver Island University.
+        I like taking things apart to see how they work — servers, networks, and the occasional
+        game save file — and then putting them back together a little better than before.
+      </p>
+      <h2>Skills</h2>
+      <ul class="skills">
+        <li>Linux administration and the command line</li>
+        <li>HTML, CSS, Javascript, Python</li>
+        <li>Networking fundamentals</li>
+        <li>Git and GitHub</li>
+        <li>Basic Hardware Documentation</li>
+      </ul>
+    </section>
+
+    <section id="projects" class="section">
+      <h2>Projects</h2>
+      <p>Three things I want to accomplish in my career.</p>
+      <div class="projects">
+        <article class="project">
+          <h3><a href="https://godotengine.org/">Make my own videogame.</a></h3>
+          <p>Currently coding an "Insane Aquarium" successor in Godot.</p>
+          <img class="project-shot"
+               src="images/godot-project-thumb.webp"
+               srcset="images/godot-project-thumb.webp 400w, images/godot-project.webp 1200w"
+               sizes="(min-width: 900px) 240px, calc(100vw - 6rem)"
+               width="400" height="225"
+               alt="Screenshot of my Insaniquarium successor in Godot: two fish and a snail in a dark blue tank, with the shop bar along the top">
+          <div id="scene" role="img" aria-label="3D animation of Blippy, a white dolphin, swimming in an aquarium"></div>
+          <a href="https://godotengine.org/">More about Godot.</a>
+        </article>
+        <article class="project">
+          <h3><a href="https://www.comptia.org/certifications/security">Earn a security certification</a></h3>
+          <p>Work towards CompTIA Security+ so I can move into defensive security and incident response.</p>
+          <a href="https://www.comptia.org/certifications/security">About Security+</a>
+        </article>
+        <article class="project">
+          <h3><a href="https://newpublic.substack.com/p/the-handmade-internet-is-making-a">Contribute to the "Indie Social Media" space.</a></h3>
+          <p>I think a quiet social space without all the algorithmic white noise would be beneficial for my mental health.</p>
+          <a href="https://newpublic.substack.com/p/the-handmade-internet-is-making-a">How to contribute</a>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <ul class="contact-list">
+        <li>Email: <a href="mailto:slyber30@gmail.com">slyber30@gmail.com</a></li>
+        <li>GitHub: <a href="https://github.com/SylvesterPirooz">github.com/SylvesterPirooz</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p><small>&copy; 2026 Andrew Pirooz</small></p>
+  </footer>
+
+  <script type="importmap">
+  {
+      "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+      }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+    const container = document.getElementById("scene");
+
+    // The tank's shape — keep in step with aspect-ratio in the #scene rule in style.css
+    const ASPECT = 220 / 150;
+
+    // Colours — background --primary, main object --bg, accent --accent, light --surface
+    const COLOR_BACKGROUND = 0x0f4c5c;
+    const COLOR_MAIN = 0xf7f4ee;
+    const COLOR_ACCENT = 0xf4a259;
+    const COLOR_LIGHT = 0xffffff;
+
+    // Speeds — swim lap, tail flap, bob, bubble rise
+    const SWIM_SPEED = 0.35;
+    const FLAP_SPEED = 6;
+    const BOB_SPEED = 1.2;
+    const BUBBLE_SPEED = 0.6;
+
+    // Visitors who ask for less motion get a still scene they can still drag around
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1;
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(COLOR_BACKGROUND);
+
+    // Camera position — x, y (height), z (distance)
+    const camera = new THREE.PerspectiveCamera(40, ASPECT, 0.1, 100);
+    camera.position.set(0, 0.5, 7);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    // Redraw at the right size whenever the tank's box changes size
+    function resize() {
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+    }
+    new ResizeObserver(resize).observe(container);
+
+    // Lights — sky and sand bounce, plus one key light from above-front
+    scene.add(new THREE.HemisphereLight(COLOR_LIGHT, COLOR_ACCENT, 1.6));
+    const sun = new THREE.DirectionalLight(COLOR_LIGHT, 1.8);
+    sun.position.set(2, 4, 5);
+    scene.add(sun);
+
+    const eyeMaterial = new THREE.MeshStandardMaterial({ color: COLOR_BACKGROUND, roughness: 0.2 });
+
+    function part(geometry, material, x, y, z) {
+      const mesh = new THREE.Mesh(geometry, material);
+      mesh.position.set(x, y, z);
+      return mesh;
+    }
+
+    // Builds one Blippy facing +x, after the dolphin in blippy-animation-transparent.gif
+    function makeBlippy(color) {
+      const skin = new THREE.MeshStandardMaterial({ color, roughness: 0.55 });
+      const body = new THREE.Group();
+
+      const head = part(new THREE.SphereGeometry(1, 32, 24), skin, 0, 0, 0);
+      head.scale.set(1.25, 1, 1);
+      body.add(head);
+
+      const rear = part(new THREE.SphereGeometry(0.65, 24, 16), skin, -0.9, -0.05, 0);
+      rear.scale.set(1.3, 0.8, 0.8);
+      body.add(rear);
+
+      const snout = part(new THREE.SphereGeometry(0.45, 24, 16), skin, 1.15, -0.35, 0);
+      snout.scale.set(1.1, 0.7, 0.8);
+      body.add(snout);
+
+      for (const side of [1, -1]) {
+        body.add(part(new THREE.SphereGeometry(0.1, 12, 8), eyeMaterial, 0.75, -0.02, 0.77 * side));
+
+        const flipper = part(new THREE.ConeGeometry(0.22, 0.6, 16), skin, 0.1, -0.85, 0.45 * side);
+        flipper.scale.z = 0.3;
+        flipper.rotation.set(0.5 * side, 0, 2.4);
+        body.add(flipper);
+      }
+
+      const dorsal = part(new THREE.ConeGeometry(0.35, 0.9, 16), skin, -0.15, 0.95, 0);
+      dorsal.scale.z = 0.3;
+      dorsal.rotation.z = 0.5;
+      body.add(dorsal);
+
+      // The tail swings from this pivot, up and down like the GIF
+      const tail = new THREE.Group();
+      tail.position.set(-1.6, -0.05, 0);
+      const stalk = part(new THREE.ConeGeometry(0.3, 0.7, 16), skin, -0.3, 0, 0);
+      stalk.rotation.z = Math.PI / 2;
+      tail.add(stalk);
+      const fluke = part(new THREE.SphereGeometry(1, 24, 12), skin, -0.7, 0, 0);
+      fluke.scale.set(0.35, 0.1, 0.9);
+      tail.add(fluke);
+      body.add(tail);
+
+      scene.add(body);
+      return { body, tail };
+    }
+
+    // Baby tints — Blippy's colour mixed 40% toward a palette colour, so no new colours
+    const COLOR_BLUE_TINT = new THREE.Color(COLOR_MAIN).lerp(new THREE.Color(COLOR_BACKGROUND), 0.4);
+    const COLOR_RED_TINT = new THREE.Color(COLOR_MAIN).lerp(new THREE.Color(0xa53d0c), 0.4); // --link
+
+    // The pod — size, swim width, lap speed, depth (z), height, and a phase so they don't move in step
+    const pod = [
+      { color: COLOR_MAIN, size: 0.5, range: 2, speed: 1, z: 0, y: 0, phase: 0 },
+      { color: COLOR_BLUE_TINT, size: 0.28, range: 2.2, speed: 1.3, z: -0.7, y: 0.9, phase: 1.2 },
+      { color: COLOR_RED_TINT, size: 0.28, range: 1.8, speed: 1.15, z: 0.6, y: -1, phase: 2.6 },
+    ].map((fish) => {
+      const built = makeBlippy(fish.color);
+      built.body.scale.setScalar(fish.size);
+      built.body.rotation.y = Math.cos(fish.phase) > 0 ? Math.PI : 0;
+      return { ...fish, ...built };
+    });
+
+    // Sand floor
+    const sand = part(new THREE.BoxGeometry(8, 0.4, 3), new THREE.MeshStandardMaterial({ color: COLOR_ACCENT, roughness: 1 }), 0, -2.1, 0);
+    scene.add(sand);
+
+    // Tank edges — the glass outline
+    const tank = new THREE.LineSegments(
+      new THREE.EdgesGeometry(new THREE.BoxGeometry(6, 3.8, 2.5)),
+      new THREE.LineBasicMaterial({ color: COLOR_LIGHT, transparent: true, opacity: 0.35 })
+    );
+    tank.position.y = -0.05;
+    scene.add(tank);
+
+    // Plant tints — seaweed is the water lightened with Blippy's cream; pink is cream toward --link
+    const COLOR_SEA_GREEN = new THREE.Color(COLOR_BACKGROUND).lerp(new THREE.Color(COLOR_MAIN), 0.12);
+    const COLOR_PINK = new THREE.Color(COLOR_MAIN).lerp(new THREE.Color(0xa53d0c), 0.45);
+    const frondMaterial = new THREE.MeshStandardMaterial({ color: COLOR_SEA_GREEN, roughness: 0.8 });
+    const petalMaterial = new THREE.MeshStandardMaterial({ color: COLOR_PINK, roughness: 0.6 });
+    const centreMaterial = new THREE.MeshStandardMaterial({ color: COLOR_ACCENT, roughness: 0.6 });
+
+    // The plant — where it stands on the sand (x, z), at the back-left of the tank
+    const plant = new THREE.Group();
+    plant.position.set(-2.1, -1.9, -0.9);
+    scene.add(plant);
+
+    // Fronds — flattened cones like Blippy's fins: x offset, height, lean
+    const fronds = [
+      { x: -0.25, height: 1.0, lean: 0.35 },
+      { x: -0.08, height: 1.5, lean: 0.12 },
+      { x: 0.1, height: 1.2, lean: -0.2 },
+      { x: 0.28, height: 0.8, lean: -0.45 },
+    ];
+    for (const frond of fronds) {
+      const pivot = new THREE.Group();
+      pivot.position.x = frond.x;
+      pivot.rotation.z = frond.lean;
+      const leaf = part(new THREE.ConeGeometry(0.16, frond.height, 12), frondMaterial, 0, frond.height / 2, 0);
+      leaf.scale.z = 0.35;
+      pivot.add(leaf);
+      plant.add(pivot);
+    }
+
+    // The flower — a stem, five petals round an orange centre, turned to face the front
+    const FLOWER_HEIGHT = 1.7;
+    const stem = part(new THREE.CylinderGeometry(0.03, 0.04, FLOWER_HEIGHT, 8), frondMaterial, 0.05, FLOWER_HEIGHT / 2, 0.1);
+    plant.add(stem);
+    const flower = new THREE.Group();
+    flower.position.set(0.05, FLOWER_HEIGHT, 0.1);
+    for (let i = 0; i < 5; i++) {
+      const angle = (i / 5) * Math.PI * 2;
+      const petal = part(new THREE.SphereGeometry(0.12, 16, 12), petalMaterial, Math.cos(angle) * 0.15, Math.sin(angle) * 0.15, 0);
+      petal.scale.z = 0.5;
+      flower.add(petal);
+    }
+    flower.add(part(new THREE.SphereGeometry(0.08, 16, 12), centreMaterial, 0, 0, 0.04));
+    plant.add(flower);
+
+    // Bubbles — how many, and how big
+    const BUBBLE_COUNT = 8;
+    const bubbleMaterial = new THREE.MeshStandardMaterial({ color: COLOR_LIGHT, transparent: true, opacity: 0.6 });
+    const bubbles = [];
+    for (let i = 0; i < BUBBLE_COUNT; i++) {
+      const bubble = part(new THREE.SphereGeometry(0.06 + Math.random() * 0.05, 12, 8), bubbleMaterial,
+        (Math.random() - 0.5) * 5, -1.9 + Math.random() * 3.6, (Math.random() - 0.5) * 2);
+      bubble.userData.speed = BUBBLE_SPEED * (0.7 + Math.random() * 0.6);
+      bubbles.push(bubble);
+      scene.add(bubble);
+    }
+
+    // Drag to look around; no zoom or pan, so the page still scrolls normally
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableZoom = false;
+    controls.enablePan = false;
+    controls.enableDamping = true;
+
+    const clock = new THREE.Clock();
+    let t = 0;
+
+    renderer.setAnimationLoop(() => {
+      const dt = clock.getDelta() * motion;
+      t += dt;
+
+      for (const fish of pod) {
+        // Swim back and forth across the tank, turning to face the way it's going
+        const lap = t * SWIM_SPEED * fish.speed + fish.phase;
+        fish.body.position.x = -Math.sin(lap) * fish.range;
+        fish.body.position.z = fish.z;
+        const heading = Math.cos(lap) > 0 ? Math.PI : 0;
+        fish.body.rotation.y += (heading - fish.body.rotation.y) * 0.05 * motion;
+
+        // Gentle bob and pitch
+        fish.body.position.y = fish.y + Math.sin(t * BOB_SPEED + fish.phase) * 0.15;
+        fish.body.rotation.z = Math.cos(t * BOB_SPEED + fish.phase) * 0.08;
+
+        fish.tail.rotation.z = Math.sin(t * FLAP_SPEED * fish.speed + fish.phase) * 0.35;
+      }
+
+      for (const bubble of bubbles) {
+        bubble.position.y += bubble.userData.speed * dt;
+        if (bubble.position.y > 1.8) bubble.position.y = -1.9;
+      }
+
+      controls.update();
+      renderer.render(scene, camera);
+    });
+  </script>
+
+</body>
+</html>
+<!-- AI disclosure: Claude (Anthropic) drafted the page structure, sections, and placeholder content from the assignment handout, and wrote the Three.js scene from the brief in prompts.md, and in week 6 added srcset to the Godot screenshot and made the scene resize with its card. -->
